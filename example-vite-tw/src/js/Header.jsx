@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
 const images = [
@@ -7,65 +7,107 @@ const images = [
   "https://www.hola.com/horizon/landscape/9877c3ad8d1a-suculentas1-t.jpg",
 ];
 
-const Navbar = () =>{
-    const [banner, setBanner] = useState();
-    const [current, setCurrent] = useState(0);
+const extendedImages = [
+  images[images.length - 1], // último al inicio
+  ...images,
+  images[0], // primero al final
+];
 
-    const nextSlide = () => {
-        setCurrent((prev) => (prev + 1) % images.length);
-    };
+const SLIDE_WIDTH = 90; // %
 
-    const prevSlide = () => {
-        setCurrent((prev) => (prev - 1 + images.length) % images.length);
-    };
+const Header = () => {
+  const [current, setCurrent] = useState(1); // empieza en el primer slide real
+  const [transition, setTransition] = useState(true);
+  const intervalRef = useRef();
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-        nextSlide();
-        }, 4000); // 4 segundos
+  // Avanza el slide
+  const nextSlide = () => {
+    setCurrent((prev) => prev + 1);
+    setTransition(true);
+  };
 
-        return () => clearInterval(interval);
-    }, []);
+  // Retrocede el slide
+  const prevSlide = () => {
+    setCurrent((prev) => prev - 1);
+    setTransition(true);
+  };
 
-    return(
-        <div className="relative w-full max-w-5xl mx-auto overflow-hidden">
-            <div className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${current * 90}%)` }}
-            >
-                {images.map((img, index) => (
-                <div
-                    key={index}
-                    className="flex-shrink-0 w-[80%] mr-[10%] rounded-2xl overflow-hidden"
-                >
-                    <img
-                    src={img}
-                    alt={`Slide ${index}`}
-                    className="w-full h-full object-cover rounded-2xl shadow-lg"
-                    />
-                </div>
-                ))}
-            </div>
+  // Efecto para el auto-slide
+  useEffect(() => {
+    intervalRef.current = setInterval(nextSlide, 4000);
+    return () => clearInterval(intervalRef.current);
+  }, []);
 
-            {/* Botón anterior */}
-            <button
-                onClick={prevSlide}
-                className="hidden lg:flex absolute top-1/2 left-4 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow"
-            >
-                <ChevronLeftIcon aria-hidden="true" className="size-5 flex-none text-gray-400"/>
+  // Efecto para el loop infinito
+  useEffect(() => {
+    if (current === extendedImages.length - 1) {
+      // Si está en el clon del primero, salta al primero real sin transición
+      setTimeout(() => {
+        setTransition(false);
+        setCurrent(1);
+      }, 500);
+    }
+    if (current === 0) {
+      // Si está en el clon del último, salta al último real sin transición
+      setTimeout(() => {
+        setTransition(false);
+        setCurrent(extendedImages.length - 2);
+      }, 500);
+    }
+  }, [current]);
 
+  // Reactiva la transición después del salto
+  useEffect(() => {
+    if (!transition) {
+      setTimeout(() => setTransition(true), 50);
+    }
+  }, [transition]);
 
-            </button>
+  return (
+    <div className="relative w-full max-w-5xl mx-auto overflow-hidden">
+      <div
+        className={`flex ${transition ? "transition-transform duration-500 ease-in-out" : ""}`}
+        style={{
+          transform: `translateX(-${current * SLIDE_WIDTH}%)`
+        }}
+      >
+        {extendedImages.map((img, index) => (
+          <div
+            key={index}
+            className="flex-shrink-0 w-[80%] mr-[10%] rounded-2xl overflow-hidden"
+          >
+            <img
+              src={img}
+              alt={`Slide ${index}`}
+              className="w-full h-full object-cover rounded-2xl shadow-lg"
+            />
+          </div>
+        ))}
+      </div>
 
-            {/* Botón siguiente */}
-            <button
-                onClick={nextSlide}
-                className="hidden lg:flex absolute top-1/2 right-4 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow"
-            >
-                <ChevronRightIcon className="size-5 flex-none text-gray-400"/>
+      {/* Botón anterior */}
+      <button
+        onClick={() => {
+          clearInterval(intervalRef.current);
+          prevSlide();
+        }}
+        className="hidden lg:flex absolute top-1/2 left-4 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow"
+      >
+        <ChevronLeftIcon aria-hidden="true" className="size-5 flex-none text-gray-400"/>
+      </button>
 
-            </button>
-        </div>
-    );
-}
+      {/* Botón siguiente */}
+      <button
+        onClick={() => {
+          clearInterval(intervalRef.current);
+          nextSlide();
+        }}
+        className="hidden lg:flex absolute top-1/2 right-4 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow"
+      >
+        <ChevronRightIcon className="size-5 flex-none text-gray-400"/>
+      </button>
+    </div>
+  );
+};
 
-export default Navbar;
+export default Header;
