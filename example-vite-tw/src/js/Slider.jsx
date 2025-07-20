@@ -65,25 +65,27 @@ const Slider = () => {
   }, [transition]);
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto overflow-hidden">
-      <div
-        className={`flex ${transition ? "transition-transform duration-500 ease-in-out" : ""}`}
-        style={{
-          transform: `translateX(-${current * SLIDE_WIDTH}%)`
-        }}
-      >
-        {extendedImages.map((img, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 w-[80%] mr-[10%] rounded-2xl overflow-hidden"
-          >
-            <img
-              src={img}
-              alt={`Slide ${index}`}
-              className="w-full h-full lg:h-[500px] object-cover rounded-2xl shadow-lg"
-            />
-          </div>
-        ))}
+    <div className="relative w-full max-w-5xl mx-auto">
+      <div className="overflow-hidden">
+        <div
+          className={`flex ${transition ? "transition-transform duration-500 ease-in-out" : ""}`}
+          style={{
+            transform: `translateX(-${current * SLIDE_WIDTH}%)`
+          }}
+        >
+          {extendedImages.map((img, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 w-[80%] mr-[10%] rounded-2xl overflow-hidden"
+            >
+              <img
+                src={img}
+                alt={`Slide ${index}`}
+                className="w-full h-full lg:h-[500px] object-cover rounded-2xl shadow-lg"
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Botón anterior */}
@@ -92,7 +94,7 @@ const Slider = () => {
           clearInterval(intervalRef.current);
           prevSlide();
         }}
-        className="hidden lg:flex absolute top-1/2 left-4 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow"
+        className="hidden lg:flex absolute top-1/2 -left-10 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow"
       >
         <ChevronLeftIcon aria-hidden="true" className="size-5 flex-none text-gray-400"/>
       </button>
@@ -103,7 +105,7 @@ const Slider = () => {
           clearInterval(intervalRef.current);
           nextSlide();
         }}
-        className="hidden lg:flex absolute top-1/2 right-4 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow"
+        className="hidden lg:flex absolute top-1/2 -right-10 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow"
       >
         <ChevronRightIcon className="size-5 flex-none text-gray-400"/>
       </button>
