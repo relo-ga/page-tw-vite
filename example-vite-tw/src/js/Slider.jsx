@@ -5,6 +5,7 @@ const images = [
   "https://media.admagazine.com/photos/618a62c190c4ec9a52ca0f56/master/w_1600%2Cc_limit/82871.jpg",
   "https://i.ytimg.com/vi/08xNeKBokzo/maxresdefault.jpg",
   "https://www.hola.com/horizon/landscape/9877c3ad8d1a-suculentas1-t.jpg",
+  "https://www.floresyplantas.net/wp-content/uploads/terrario-de-plantas-suculentas-y-catus-2.jpg",
 ];
 
 const extendedImages = [
@@ -15,7 +16,7 @@ const extendedImages = [
 
 const SLIDE_WIDTH = 90; // %
 
-const Header = () => {
+const Slider = () => {
   const [current, setCurrent] = useState(1); // empieza en el primer slide real
   const [transition, setTransition] = useState(true);
   const intervalRef = useRef();
@@ -79,7 +80,7 @@ const Header = () => {
             <img
               src={img}
               alt={`Slide ${index}`}
-              className="w-full h-full object-cover rounded-2xl shadow-lg"
+              className="w-full h-full lg:h-[500px] object-cover rounded-2xl shadow-lg"
             />
           </div>
         ))}
@@ -110,4 +111,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Slider;

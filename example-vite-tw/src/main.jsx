@@ -3,11 +3,13 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import Navbar from './js/Navbar.jsx'
-import Header from './js/Header.jsx'
+import Slider from './js/Slider.jsx'
+import CollectionsCard from './js/CollectionsCard.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Navbar/>
-    <Header/>
+    <Slider/>
+    <CollectionsCard/>
   </StrictMode>,
 )
