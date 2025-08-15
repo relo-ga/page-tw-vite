@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
-import Slider from './Slider.jsx';
+import Slider from './components/Slider.jsx';
 
 const collections = [
     { id: 1, name: "Cuerno de alce", price: 100.50, image: "https://orchideeen-shop.nl/cdn/shop/articles/lucas-hoang-VIYcvD-NkME-unsplash1.jpg?v=1710246665" },
@@ -13,7 +13,7 @@ const collections = [
     { id: 8, name: "Culantrillo", price: 150, image: "https://crecerplantas.com/wp-content/uploads/2024/04/Adiantum.png" },
 ];
 
-const CollectionsCard = () => {
+const Home = () => {
     const [ actual, setActual ] = useState(0);
 
     const [isMobile, setIsMobile] = useState(false);
@@ -25,7 +25,7 @@ const CollectionsCard = () => {
     const anterior = () => {
             setActual(actual - 1);
     }
-    console.log(actual); 
+    //console.log(actual); 
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(max-width: 767px)'); // Ajusta el ancho según tus necesidades
@@ -58,7 +58,7 @@ const CollectionsCard = () => {
     return (
         <div>
             <Slider/>
-            <div className="bg-white shadow-md rounded-lg p-6">
+            <div className="w-full max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
                 <h2 className="text-xl font-semibold mb-4">Las Ofertas Del Mes!</h2>
                 {/* <p className="text-gray-600">Explore our curated collections of products.</p> */}
                 <div className="relative mt-4 w-full">
@@ -92,14 +92,14 @@ const CollectionsCard = () => {
                             onClick={()=>{
                                 anterior();
                         }} 
-                        className="absolute -left-10 top-1/2 -translate-y-1/2 bg-gray-200 p-2 rounded-full shadow hover:bg-gray-300">
+                        className="absolute lg:-left-10 -left-5 top-1/2 -translate-y-1/2 bg-gray-200 p-2 rounded-full shadow hover:bg-gray-300">
                             <ChevronLeftIcon aria-hidden="true" className="size-5 flex-none text-gray-400"/>
                         </button>
                         <button 
                             onClick={()=>{
                             siguiente();
                         }} 
-                        className="absolute -right-10 top-1/2 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow">
+                        className="absolute lg:-right-10 -right-5 top-1/2 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow">
                             <ChevronRightIcon aria-hidden="true" className="size-5 flex-none text-gray-400"/>
                         </button>
                     </div>
@@ -109,4 +109,4 @@ const CollectionsCard = () => {
     );
 }
 
-export default CollectionsCard;
+export default Home;
