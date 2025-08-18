@@ -1,25 +1,19 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
-const images = [
-  "https://media.admagazine.com/photos/618a62c190c4ec9a52ca0f56/master/w_1600%2Cc_limit/82871.jpg",
-  "https://i.ytimg.com/vi/08xNeKBokzo/maxresdefault.jpg",
-  "https://www.hola.com/horizon/landscape/9877c3ad8d1a-suculentas1-t.jpg",
-  "https://www.floresyplantas.net/wp-content/uploads/terrario-de-plantas-suculentas-y-catus-2.jpg",
-];
-
-const extendedImages = [
-  images[images.length - 1], // último al inicio
-  ...images,
-  images[0], // primero al final
-];
-
 const SLIDE_WIDTH = 90; // %
 
-const Slider = () => {
+const Slider = (props) => {
   const [current, setCurrent] = useState(1); // empieza en el primer slide real
   const [transition, setTransition] = useState(true);
   const intervalRef = useRef();
+
+  const extendedImages = [
+    props.images[props.images.length - 1], // último al inicio
+    ...props.images,
+    props.images[0], // primero al final
+  ];
+
 
   // Avanza el slide
   const nextSlide = () => {
@@ -65,7 +59,7 @@ const Slider = () => {
   }, [transition]);
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto px-6">
+    <div className="group/slider relative w-full max-w-7xl mx-auto px-6">
       <div className="relative mt-4 w-full">
         <div className="overflow-hidden">
           <div
@@ -88,27 +82,27 @@ const Slider = () => {
             ))}
           </div>
 
-  {/* Botón anterior */}
-        <button
-          onClick={() => {
-            clearInterval(intervalRef.current);
-            prevSlide();
-          }}
-          className="hidden lg:flex absolute top-1/2 -left-10 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow"
-        >
-          <ChevronLeftIcon aria-hidden="true" className="size-5 flex-none text-gray-400"/>
-        </button>
+          {/* Botón anterior */}
+          <button
+            onClick={() => {
+              clearInterval(intervalRef.current);
+              prevSlide();
+            }}
+            className="hidden lg:flex absolute top-1/2 -left-10 -translate-y-1/2 p-2 rounded-full duration-700 ease-in-out hover:bg-gray-200"
+          >
+            <ChevronLeftIcon aria-hidden="true" className="size-5 flex-none text-gray-400"/>
+          </button>
 
-        {/* Botón siguiente */}
-        <button
-          onClick={() => {
-            clearInterval(intervalRef.current);
-            nextSlide();
-          }}
-          className="hidden lg:flex absolute top-1/2 -right-10 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow"
-        >
-          <ChevronRightIcon className="size-5 flex-none text-gray-400"/>
-        </button>
+          {/* Botón siguiente */}
+          <button
+            onClick={() => {
+              clearInterval(intervalRef.current);
+              nextSlide();
+            }}
+            className="hidden lg:flex absolute top-1/2 -right-10 -translate-y-1/2 p-2 rounded-full duration-700 ease-in-out hover:bg-gray-200"
+          >
+            <ChevronRightIcon className="size-5 flex-none text-gray-400"/>
+          </button>
 
         </div>
       </div>  
