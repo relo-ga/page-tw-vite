@@ -59,7 +59,7 @@ const Slider = (props) => {
   }, [transition]);
 
   return (
-    <div className="group/slider relative w-full max-w-7xl mx-auto px-6">
+    <div className="group/slider relative w-full max-w-9/10 mx-auto px-6">
       <div className="relative mt-4 w-full">
         <div className="overflow-hidden">
           <div
