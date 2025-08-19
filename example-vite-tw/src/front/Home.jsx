@@ -42,7 +42,7 @@ const Home = () => {
     
             mediaQuery.addEventListener('change', handleResize);
             return () => {
-                console.log(isMobile);
+                //console.log(isMobile);
                 mediaQuery.removeEventListener('change', handleResize);
             };
         }, [actual]);
