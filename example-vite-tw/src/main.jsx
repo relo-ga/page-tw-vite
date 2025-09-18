@@ -29,6 +29,6 @@ const Main = () => {
     );
 }
 
-//ReactDOM.createRoot(document.getElementById('root')).render(<Main />)
-ReactDOM.createRoot(document.getElementById('root')).render(<Home />)
+ReactDOM.createRoot(document.getElementById('root')).render(<Main />)
+//ReactDOM.createRoot(document.getElementById('root')).render(<Home />)
 
