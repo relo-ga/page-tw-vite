@@ -6,6 +6,8 @@ import { router } from "./front/routes";  // Import the router configuration
 import { StoreProvider } from './front/hooks/useGlobalReducer';  // Import the StoreProvider for global state management
 import { BackendURL } from './front/components/BackendURL'; // Import the BackendURL component to handle missing env variable
 
+import Home from './front/Home';
+
 import './index.css'
 
 const Main = () => {
@@ -27,5 +29,6 @@ const Main = () => {
     );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<Main />)
+//ReactDOM.createRoot(document.getElementById('root')).render(<Main />)
+ReactDOM.createRoot(document.getElementById('root')).render(<Home />)
 
